@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS location;
+DROP TABLE IF EXISTS category;
+CREATE TABLE category (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    symbol VARCHAR(255) NOT NULL,
+    description TEXT
+);
+
+CREATE TABLE location (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    category_id INT NOT NULL,
+    user_id INT NOT NULL,
+    public BOOLEAN DEFAULT TRUE,
+    description TEXT NOT NULL,
+    coordinates POINT NOT NULL,
+    last_edited TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
+);
