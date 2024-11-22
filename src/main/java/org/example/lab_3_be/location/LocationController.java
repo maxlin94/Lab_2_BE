@@ -1,14 +1,22 @@
 package org.example.lab_3_be.location;
 
+import org.example.lab_3_be.dto.LocationDto;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/locations")
 public class LocationController {
+    LocationService locationService;
+
+    public LocationController(LocationService locationService) {
+        this.locationService = locationService;
+    }
 
     @GetMapping
-    public String getAllLocations() {
-        return "Hello World";
+    public List<LocationDto> getAllLocations() {
+        return locationService.getAllLocations();
     }
 
     @PostMapping
