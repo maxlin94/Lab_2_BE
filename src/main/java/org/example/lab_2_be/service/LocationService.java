@@ -82,17 +82,14 @@ public class LocationService {
 
     public void updateLocationById(int id, LocationDto locationDto) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<LocationEntity> optionalLocation = locationRepository.findByIdAndSameUserId(id, userId);
-        Optional<CategoryEntity> optionalCategory = categoryRepository.findById(locationDto.categoryId());
-        if (optionalCategory.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid category ID");
-        }
-        if (optionalLocation.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid location ID");
-        }
+        LocationEntity locationEntity = locationRepository.findByIdAndSameUserId(id, userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid location ID"));
+
+        categoryRepository.findById(locationDto.categoryId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid category ID"));
+
         Point coordinates = geometryFactory.createPoint(new Coordinate(locationDto.lng(), locationDto.lat()));
         coordinates.setSRID(4326);
-        LocationEntity locationEntity = optionalLocation.get();
         locationEntity.setName(locationDto.name());
         locationEntity.setDescription(locationDto.description());
         locationEntity.setIsPublic(locationDto.isPublic());
