@@ -10,21 +10,24 @@ public record LocationDto(
         @NotNull(message = "Category ID is required")
         Integer categoryId,
 
+        @NotBlank
         @Size(max = 500, message = "Description cannot exceed 500 characters")
         String description,
 
+        @NotNull
         @Min(value = -180, message = "Longitude must be greater than or equal to -180")
         @Max(value = 180, message = "Longitude must be less than or equal to 180")
-        double lng,
+        Double lng,
 
+        @NotNull
         @Min(value = -90, message = "Latitude must be greater than or equal to -90")
         @Max(value = 90, message = "Latitude must be less than or equal to 90")
-        double lat,
+        Double lat,
 
         Boolean isPublic) {
     public static LocationDto fromLocation(LocationEntity locationEntity) {
-        double lng = locationEntity.getCoordinates().getCoordinate().getOrdinate(0);
-        double lat = locationEntity.getCoordinates().getCoordinate().getOrdinate(1);
+        double lng = locationEntity.getCoordinates().getCoordinate().getX();
+        double lat = locationEntity.getCoordinates().getCoordinate().getY();
         return new LocationDto(locationEntity.getName(), locationEntity.getCategory().getId(), locationEntity.getDescription(), lng, lat, locationEntity.getIsPublic());
     }
 }

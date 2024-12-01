@@ -26,8 +26,8 @@ public class LocationController {
 
     @PostMapping
     public ResponseEntity<?> addLocation(@Valid @RequestBody LocationDto locationDto) {
-        int locationId = locationService.addLocation(locationDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(String.format("Location with ID: %d was added", locationId));
+        locationService.addLocation(locationDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{id}")
@@ -38,14 +38,15 @@ public class LocationController {
     }
 
     @PutMapping("/{id}")
-    public String updateLocationById(@PathVariable int id, @Valid @RequestBody LocationDto locationDto) {
-        return locationService.updateLocationById(id, locationDto);
+    public ResponseEntity<?> updateLocationById(@PathVariable int id, @Valid @RequestBody LocationDto locationDto) {
+        locationService.updateLocationById(id, locationDto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/category/{category}")
     public List<LocationDto> getLocationsByCategory(@PathVariable String category) {
         List<LocationDto> locations = locationService.getLocationByCategory(category);
-        if(locations.isEmpty()) {
+        if (locations.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return locations;
@@ -54,5 +55,11 @@ public class LocationController {
     @GetMapping("/radius")
     public List<LocationDto> getPlacesWithinRadius(@Valid @RequestParam double lat, @RequestParam double lng, @RequestParam double radius) {
         return locationService.getPlacesWithinRadius(lat, lng, radius);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteLocation(@PathVariable int id) {
+        locationService.deleteLocation(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -5,11 +5,13 @@ import org.example.lab_3_be.dto.LocationDto;
 import org.example.lab_3_be.entities.CategoryEntity;
 import org.example.lab_3_be.entities.LocationEntity;
 import org.example.lab_3_be.repository.LocationRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Coordinate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,18 +41,14 @@ public class LocationService {
         return locationRepository.findAccessibleLocationById(id, userId).map(LocationDto::fromLocation);
     }
 
-    public int addLocation(LocationDto locationDto) {
+    public void addLocation(LocationDto locationDto) {
         int categoryId = locationDto.categoryId();
         double lat = locationDto.lat();
         double lng = locationDto.lng();
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        if (lat < -90 || lat > 90 || lng < -180 || lng > 180) {
-            throw new IllegalArgumentException("Invalid latitude or longitude");
-        }
-
         CategoryEntity category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid category ID: %d", categoryId)));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid category ID"));
         Point coordinates = geometryFactory.createPoint(new Coordinate(lng, lat));
         coordinates.setSRID(4326);
 
@@ -63,7 +61,6 @@ public class LocationService {
         locationEntity.setIsPublic(locationDto.isPublic());
 
         locationRepository.save(locationEntity);
-        return locationEntity.getId();
     }
 
     public List<LocationDto> getLocationByCategory(String category) {
@@ -83,11 +80,11 @@ public class LocationService {
                 .toList();
     }
 
-    public String updateLocationById(int id, LocationDto locationDto) {
+    public void updateLocationById(int id, LocationDto locationDto) {
         String userId = SecurityContextHolder.getContext().getAuthentication().getName();
         Optional<LocationEntity> optionalLocation = locationRepository.findByIdAndSameUserId(id, userId);
         if (optionalLocation.isPresent()) {
-            Point coordinates = geometryFactory.createPoint(new Coordinate(locationDto.lat(), locationDto.lng()));
+            Point coordinates = geometryFactory.createPoint(new Coordinate(locationDto.lng(), locationDto.lat()));
             coordinates.setSRID(4326);
             LocationEntity locationEntity = optionalLocation.get();
             locationEntity.setName(locationDto.name());
@@ -95,9 +92,19 @@ public class LocationService {
             locationEntity.setIsPublic(locationDto.isPublic());
             locationEntity.setCoordinates(coordinates);
             locationRepository.save(locationEntity);
-            return String.format("Updated location with id %d", id);
         } else {
-            throw new IllegalArgumentException("Invalid location ID");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    public void deleteLocation(int id) {
+        String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+        Optional<LocationEntity> optionalLocation = locationRepository.findByIdAndSameUserId(id, userId);
+        if (optionalLocation.isPresent()) {
+            LocationEntity locationEntity = optionalLocation.get();
+            locationRepository.delete(locationEntity);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
     }
 }

@@ -25,6 +25,7 @@ public class SecurityConfig {
                                 .requestMatchers(GET, "/api/categories", "/api/categories/*").permitAll()
                                 .requestMatchers(GET, "/api/locations/**").permitAll()
                                 .requestMatchers(PUT, "/api/locations/**").hasAuthority("USER")
+                                .requestMatchers(DELETE, "/api/locations/**").hasAuthority("USER")
                                 .requestMatchers(POST, "/api/locations").hasAuthority("USER")
                                 .requestMatchers(POST, "/api/categories").hasAuthority("ADMIN")
                                 .requestMatchers("/login", "/error", "/error/**", "/").permitAll()
