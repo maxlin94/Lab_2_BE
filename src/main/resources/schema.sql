@@ -1,3 +1,4 @@
+ALTER DATABASE locations CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
 DROP TABLE IF EXISTS location;
 DROP TABLE IF EXISTS category;
 CREATE TABLE category (
@@ -11,10 +12,10 @@ CREATE TABLE location (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     category_id INT NOT NULL,
-    user_id INT NOT NULL,
+    user_id VARCHAR(255) NOT NULL,
     public BOOLEAN DEFAULT TRUE,
     description TEXT NOT NULL,
-    coordinates POINT NOT NULL,
+    coordinates POINT NOT NULL SRID 4326,
     last_edited TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
