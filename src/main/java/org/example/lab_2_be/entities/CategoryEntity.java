@@ -1,4 +1,4 @@
-package org.example.lab_3_be.entities;
+package org.example.lab_2_be.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

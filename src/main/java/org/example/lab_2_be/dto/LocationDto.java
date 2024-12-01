@@ -1,7 +1,7 @@
-package org.example.lab_3_be.dto;
+package org.example.lab_2_be.dto;
 
 import jakarta.validation.constraints.*;
-import org.example.lab_3_be.entities.LocationEntity;
+import org.example.lab_2_be.entities.LocationEntity;
 
 public record LocationDto(
         @NotBlank(message = "Name must not be blank")

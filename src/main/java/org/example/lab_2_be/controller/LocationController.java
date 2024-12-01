@@ -1,8 +1,8 @@
-package org.example.lab_3_be.controller;
+package org.example.lab_2_be.controller;
 
 import jakarta.validation.Valid;
-import org.example.lab_3_be.dto.LocationDto;
-import org.example.lab_3_be.service.LocationService;
+import org.example.lab_2_be.dto.LocationDto;
+import org.example.lab_2_be.service.LocationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

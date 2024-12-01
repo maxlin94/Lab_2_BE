@@ -1,8 +1,8 @@
-package org.example.lab_3_be.dto;
+package org.example.lab_2_be.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.example.lab_3_be.entities.CategoryEntity;
+import org.example.lab_2_be.entities.CategoryEntity;
 
 public record CategoryDto(
         @NotBlank(message = "Name must not be blank")

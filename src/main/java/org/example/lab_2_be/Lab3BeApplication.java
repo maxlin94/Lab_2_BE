@@ -1,4 +1,4 @@
-package org.example.lab_3_be;
+package org.example.lab_2_be;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;

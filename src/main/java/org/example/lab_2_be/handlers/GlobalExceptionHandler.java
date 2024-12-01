@@ -1,4 +1,4 @@
-package org.example.lab_3_be.handlers;
+package org.example.lab_2_be.handlers;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

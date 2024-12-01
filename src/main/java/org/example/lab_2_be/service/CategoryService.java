@@ -1,7 +1,7 @@
-package org.example.lab_3_be.service;
+package org.example.lab_2_be.service;
 
-import org.example.lab_3_be.dto.CategoryDto;
-import org.example.lab_3_be.repository.CategoryRepository;
+import org.example.lab_2_be.dto.CategoryDto;
+import org.example.lab_2_be.repository.CategoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;

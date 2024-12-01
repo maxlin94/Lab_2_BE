@@ -1,9 +1,9 @@
-package org.example.lab_3_be.controller;
+package org.example.lab_2_be.controller;
 
 
 import jakarta.validation.Valid;
-import org.example.lab_3_be.service.CategoryService;
-import org.example.lab_3_be.dto.CategoryDto;
+import org.example.lab_2_be.service.CategoryService;
+import org.example.lab_2_be.dto.CategoryDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package org.example.lab_3_be.repository;
+package org.example.lab_2_be.repository;
 
-import org.example.lab_3_be.entities.CategoryEntity;
-import org.example.lab_3_be.entities.LocationEntity;
+import org.example.lab_2_be.entities.CategoryEntity;
+import org.example.lab_2_be.entities.LocationEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;

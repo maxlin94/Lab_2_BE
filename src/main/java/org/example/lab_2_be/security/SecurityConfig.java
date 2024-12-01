@@ -1,4 +1,4 @@
-package org.example.lab_3_be.security;
+package org.example.lab_2_be.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
