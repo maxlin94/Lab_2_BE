@@ -48,7 +48,7 @@ public class LocationEntity {
     private String description;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "last_edited", insertable = false)
+    @Column(name = "last_edited", updatable = false, insertable = false)
     private Instant lastEdited;
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at", updatable = false, insertable = false)
