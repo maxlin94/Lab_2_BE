@@ -21,6 +21,7 @@ public class LocationEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Column(name = "coordinates", columnDefinition = "geometry")
     private Point coordinates;
 
     @Size(max = 255)
@@ -35,11 +36,11 @@ public class LocationEntity {
 
     @NotNull
     @Column(name = "user_id", nullable = false)
-    private Integer userId;
+    private String userId;
 
     @ColumnDefault("1")
     @Column(name = "public")
-    private Boolean publicField;
+    private Boolean isPublic;
 
     @NotNull
     @Lob
